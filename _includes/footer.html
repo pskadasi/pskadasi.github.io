@@ -1,0 +1,9 @@
+<footer>
+  <span>
+    © <span data-year>{{ "now" | date: "%Y" }}</span>
+    <span data-site-name>{{ site.data.profile.name }}</span>.
+  </span>
+  {% unless page.url == "/" %}
+    <a href="{{ '/' | relative_url }}#blog">Back to blog</a>
+  {% endunless %}
+</footer>

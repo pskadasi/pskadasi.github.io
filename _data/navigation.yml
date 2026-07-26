@@ -1,0 +1,27 @@
+- label: About
+  id: about
+
+- label: Current work
+  id: current-work
+
+- label: Research
+  children:
+    - label: Research Interests
+      id: research
+    - label: Doctoral Research
+      id: phd-work
+
+- label: Publications
+  id: publications
+
+- label: Teaching
+  id: teaching
+
+- label: Memories
+  id: memories
+
+- label: Materials
+  id: materials
+
+- label: Blog
+  id: blog

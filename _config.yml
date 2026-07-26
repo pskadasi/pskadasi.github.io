@@ -1,0 +1,35 @@
+title: Pritam Kadasi
+description: Personal website of Pritam Kadasi, AI Research Engineer
+url: "https://pskadasi.github.io"
+baseurl: ""
+font_stack: "Helvetica, 'Helvetica Neue', Arial, sans-serif"
+
+# Remove a section ID from this list to show it again.
+hidden_sections:
+  - memories
+  - materials
+  - blog
+
+markdown: kramdown
+permalink: /blog/:title.html
+
+collections:
+  sections:
+    output: false
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - images/README.md
+  - scripts
+  - serve.sh
+  - serve.bat
+  - vendor

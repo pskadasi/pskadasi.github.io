@@ -1,0 +1,84 @@
+---
+layout: default
+---
+<main class="tab-content">
+  {% assign sections = site.sections | sort: "order" %}
+  {% assign visible_section_count = 0 %}
+  {% for section in sections %}
+    {% unless site.hidden_sections contains section.section_id %}
+      <section
+        id="panel-{{ section.section_id }}"
+        role="tabpanel"
+        aria-labelledby="tab-{{ section.section_id }}"
+        class="tab-panel"
+        data-panel="{{ section.section_id }}"
+        tabindex="0"
+        {% if visible_section_count > 0 %}hidden{% endif %}
+      >
+        {{ section.content }}
+
+        {% case section.section_id %}
+          {% when "publications" %}
+            <ol class="publication-list">
+              {% for publication in site.data.publications %}
+                <li>
+                  <article>
+                    <h2>
+                      <a
+                        href="{{ publication.url | escape }}"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {{ publication.title }}
+                      </a>
+                    </h2>
+                    <p>
+                      {{ publication.authors }}
+                      <em>{{ publication.venue }}, {{ publication.year }}.</em>
+                    </p>
+                  </article>
+                </li>
+              {% endfor %}
+            </ol>
+            <p class="scholar-link">
+              <a
+                href="{{ site.data.profile.scholar_url | escape }}"
+                target="_blank"
+                rel="noreferrer"
+              >
+                View complete Google Scholar profile
+              </a>
+            </p>
+
+          {% when "memories" %}
+            <div
+              id="memory-gallery"
+              class="empty-grid"
+              aria-label="Photo gallery"
+            ></div>
+
+          {% when "blog" %}
+            <div class="post-list">
+              {% for post in site.posts %}
+                <article>
+                  <p class="eyebrow">
+                    {{ post.eyebrow | default: "Post" }}
+                    {% if post.read_time %}· {{ post.read_time }}{% endif %}
+                  </p>
+                  <h2>
+                    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+                  </h2>
+                  {% if post.abstract %}
+                    <p>{{ post.abstract }}</p>
+                  {% endif %}
+                </article>
+              {% else %}
+                <p>No posts yet.</p>
+              {% endfor %}
+            </div>
+        {% endcase %}
+      </section>
+      {% assign visible_section_count = visible_section_count | plus: 1 %}
+    {% endunless %}
+  {% endfor %}
+</main>

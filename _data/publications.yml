@@ -1,0 +1,30 @@
+- title: "Evaluating Prompt Variants for Polarization Detection"
+  authors: "Pritam Kadasi, Anuj Tiwari, Mayank Singh."
+  venue: SemEval
+  year: 2026
+  url: "https://aclanthology.org/2026.semeval-1.376/"
+
+- title: "Task-Specificity Score: Measuring How Much Instructions Really Matter for Supervision"
+  authors: "Pritam Kadasi, Abhishek Upperwal, Mayank Singh."
+  venue: Preprint
+  year: 2026
+  url: "https://arxiv.org/abs/2602.03103"
+
+- title: "ADAPT: Learning Task Mixtures for Budget-Constrained Instruction Tuning"
+  authors: "Pritam Kadasi, Abhishek Upperwal, Mayank Singh."
+  venue: Preprint
+  year: 2025
+  url: "https://arxiv.org/abs/2512.04555"
+
+- title: "Model Hubs and Beyond: Analyzing Model Popularity, Performance, and Documentation"
+  authors: "Pritam Kadasi, Sriman Reddy Kondam, Srivathsa V. Chaturvedula, et al."
+  venue: ICWSM
+  year: 2025
+  url: "https://ojs.aaai.org/index.php/ICWSM/article/view/35855"
+
+- title: "Unveiling the Multi-Annotation Process: Examining Annotation Quantity and Instance Difficulty"
+  authors: "Pritam Kadasi, Mayank Singh."
+  venue: EMNLP
+  year: 2023
+  url: "https://aclanthology.org/2023.findings-emnlp.96/"
+

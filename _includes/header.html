@@ -1,0 +1,44 @@
+{% assign is_home = false %}
+{% if page.url == "/" %}
+  {% assign is_home = true %}
+{% endif %}
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="identity-row">
+      <div>
+        <a
+          class="site-name"
+          href="{% if is_home %}#about{% else %}{{ '/' | relative_url }}#about{% endif %}"
+          data-site-name
+        >
+          {{ site.data.profile.name }}
+        </a>
+        <p class="site-role" data-role>{{ site.data.profile.role }}</p>
+      </div>
+
+      <div class="header-actions">
+        <button
+          class="theme-button"
+          type="button"
+          aria-label="Use dark theme"
+          title="Use dark theme"
+        >
+          <span aria-hidden="true">◕</span>
+        </button>
+        <button
+          class="menu-button"
+          type="button"
+          aria-label="Toggle navigation"
+          aria-expanded="false"
+          aria-controls="site-navigation"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+
+    {% include navigation.html %}
+  </div>
+</header>
+

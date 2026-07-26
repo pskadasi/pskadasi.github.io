@@ -1,0 +1,69 @@
+{% assign is_home = false %}
+{% if page.url == "/" %}
+  {% assign is_home = true %}
+{% endif %}
+
+<nav
+  id="site-navigation"
+  class="site-nav"
+  aria-label="Primary navigation"
+  {% if is_home %}role="tablist"{% endif %}
+>
+  {% for item in site.data.navigation %}
+    {% unless site.hidden_sections contains item.id %}
+      {% if item.children %}
+        <div class="nav-group" data-research-menu>
+          <button
+            id="research-menu-trigger"
+            class="nav-group-trigger"
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            aria-controls="research-submenu"
+          >
+            {{ item.label }} <span aria-hidden="true">▾</span>
+          </button>
+          <div id="research-submenu" class="nav-submenu" role="menu">
+            {% for child in item.children %}
+              {% unless site.hidden_sections contains child.id %}
+                {% if is_home %}
+                  <button
+                    id="tab-{{ child.id }}"
+                    type="button"
+                    role="menuitem"
+                    data-tab="{{ child.id }}"
+                  >
+                    {{ child.label }}
+                  </button>
+                {% else %}
+                  <a href="{{ '/' | relative_url }}#{{ child.id }}" role="menuitem">
+                    {{ child.label }}
+                  </a>
+                {% endif %}
+              {% endunless %}
+            {% endfor %}
+          </div>
+        </div>
+      {% elsif is_home %}
+        <button
+          id="tab-{{ item.id }}"
+          type="button"
+          role="tab"
+          aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+          aria-controls="panel-{{ item.id }}"
+          data-tab="{{ item.id }}"
+          {% if forloop.first %}class="active"{% endif %}
+        >
+          {{ item.label }}
+        </button>
+      {% else %}
+        <a
+          href="{{ '/' | relative_url }}#{{ item.id }}"
+          {% if item.id == "blog" %}class="active" aria-current="page"{% endif %}
+        >
+          {{ item.label }}
+        </a>
+      {% endif %}
+    {% endunless %}
+  {% endfor %}
+</nav>
