@@ -28,6 +28,18 @@
     if (element.textContent.trim() !== "Email") element.textContent = email;
   });
 
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const url = new URL(link.getAttribute("href"), window.location.href);
+    const external =
+      ["http:", "https:"].includes(url.protocol) &&
+      url.origin !== window.location.origin;
+
+    if (external) {
+      link.setAttribute("target", "_blank");
+      link.setAttribute("rel", "noopener noreferrer");
+    }
+  });
+
   const themeButton = document.querySelector(".theme-button");
   const applyTheme = (useDark) => {
     document.documentElement.dataset.theme = useDark ? "dark" : "light";
