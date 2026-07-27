@@ -3,6 +3,8 @@
     © <span data-year>{{ "now" | date: "%Y" }}</span>
     <span data-site-name>{{ site.data.profile.name }}</span>.
   </span>
+  <span aria-hidden="true">·</span>
+  <span>Last updated: {{ site.time | date: "%B %-d, %Y" }}</span>
   {% unless page.url == "/" %}
     <a href="{{ '/' | relative_url }}#blog">Back to blog</a>
   {% endunless %}
