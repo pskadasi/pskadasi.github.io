@@ -8,6 +8,11 @@
   placement: about
   profile_key: scholar_url
 
+- name: Semantic Scholar
+  icon: semantic-scholar
+  placement: about
+  url: "https://www.semanticscholar.org/author/Pritam-Kadasi/2261286572"
+
 - name: ORCID
   icon: orcid
   placement: about
@@ -33,6 +38,11 @@
   icon: researchgate
   placement: about
   url: "https://www.researchgate.net/profile/Pritam-Kadasi"
+
+- name: OpenReview
+  icon: openreview
+  placement: about
+  url: "https://openreview.net/profile?id=~Pritam_Kadasi2"
 
 - name: Hugging Face
   icon: hugging-face
