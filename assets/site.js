@@ -65,6 +65,16 @@
   const researchGroup = document.querySelector("[data-research-menu]");
   const researchTrigger = document.querySelector("#research-menu-trigger");
   const researchSubmenu = document.querySelector("#research-submenu");
+  const profileMenu = document.querySelector("[data-profile-menu]");
+  const profileMenuTrigger = document.querySelector(
+    "[data-profile-menu-trigger]",
+  );
+  const profileMenuPanel = document.querySelector("[data-profile-menu-panel]");
+  const profileMotionQuery = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  );
+  let profileMenuOpen = false;
+  let profileMenuHideTimer;
 
   const closeMobileMenu = () => {
     navigation?.classList.remove("open");
@@ -75,6 +85,53 @@
     researchSubmenu?.classList.remove("open");
     researchTrigger?.setAttribute("aria-expanded", "false");
   };
+
+  const finishProfileMenuClose = () => {
+    if (!profileMenuPanel || profileMenuOpen) return;
+    window.clearTimeout(profileMenuHideTimer);
+    profileMenuPanel.hidden = true;
+    profileMenuPanel.classList.remove("is-closing");
+  };
+
+  const openProfileMenu = () => {
+    if (!profileMenuPanel || profileMenuOpen) return;
+    profileMenuOpen = true;
+    window.clearTimeout(profileMenuHideTimer);
+    profileMenuPanel.hidden = false;
+    profileMenuPanel.classList.remove("is-closing");
+    profileMenuTrigger?.setAttribute("aria-expanded", "true");
+
+    if (profileMotionQuery.matches) return;
+    profileMenuPanel.classList.remove("is-opening");
+    void profileMenuPanel.offsetWidth;
+    profileMenuPanel.classList.add("is-opening");
+  };
+
+  const closeProfileMenu = () => {
+    if (!profileMenuPanel || !profileMenuOpen) return;
+    profileMenuOpen = false;
+    profileMenuTrigger?.setAttribute("aria-expanded", "false");
+
+    profileMenuPanel.classList.remove("is-opening");
+    if (profileMotionQuery.matches) {
+      finishProfileMenuClose();
+      return;
+    }
+
+    void profileMenuPanel.offsetWidth;
+    profileMenuPanel.classList.add("is-closing");
+    window.clearTimeout(profileMenuHideTimer);
+    profileMenuHideTimer = window.setTimeout(finishProfileMenuClose, 220);
+  };
+
+  profileMenuPanel?.addEventListener("animationend", (event) => {
+    if (event.target !== profileMenuPanel) return;
+    if (profileMenuPanel.classList.contains("is-closing")) {
+      finishProfileMenuClose();
+    } else {
+      profileMenuPanel.classList.remove("is-opening");
+    }
+  });
 
   menuButton?.addEventListener("click", () => {
     const open = navigation.classList.toggle("open");
@@ -93,17 +150,48 @@
     researchTrigger.setAttribute("aria-expanded", String(open));
   });
 
+  profileMenuTrigger?.addEventListener("click", () => {
+    if (!profileMenuPanel) return;
+    closeResearchMenu();
+    closeMobileMenu();
+    if (profileMenuOpen) closeProfileMenu();
+    else openProfileMenu();
+  });
+
+  profileMenuPanel?.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeProfileMenu);
+  });
+
   document.addEventListener("mousedown", (event) => {
     if (researchGroup && !researchGroup.contains(event.target)) {
       closeResearchMenu();
+    }
+    if (profileMenu && !profileMenu.contains(event.target)) {
+      closeProfileMenu();
+    }
+  });
+
+  document.addEventListener("focusin", (event) => {
+    if (
+      profileMenuOpen &&
+      profileMenu &&
+      !profileMenu.contains(event.target)
+    ) {
+      closeProfileMenu();
     }
   });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      const profileWasOpen = profileMenuOpen;
+      const researchWasOpen = researchSubmenu?.classList.contains("open");
+      const mobileWasOpen = navigation?.classList.contains("open");
+      closeProfileMenu();
       closeResearchMenu();
       closeMobileMenu();
-      researchTrigger?.focus();
+      if (profileWasOpen) profileMenuTrigger?.focus();
+      else if (researchWasOpen) researchTrigger?.focus();
+      else if (mobileWasOpen) menuButton?.focus();
     }
   });
 
@@ -132,6 +220,7 @@
     researchGroup?.classList.toggle("active", researchActive);
 
     document.querySelector(`[data-panel="${tab}"]`)?.scrollTo({ top: 0 });
+    closeProfileMenu();
     closeResearchMenu();
     closeMobileMenu();
 

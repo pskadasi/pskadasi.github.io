@@ -1,0 +1,50 @@
+- name: Email
+  icon: email
+  placement: about
+  kind: email
+
+- name: Google Scholar
+  icon: google-scholar
+  placement: about
+  profile_key: scholar_url
+
+- name: ORCID
+  icon: orcid
+  placement: about
+  url: "https://orcid.org/0009-0009-7141-655X"
+
+# Add the person-specific author-record URL to show this link.
+- name: Web of Science
+  icon: web-of-science
+  placement: about
+  url: ""
+
+- name: ACL Anthology
+  icon: acl-anthology
+  placement: about
+  url: "https://aclanthology.org/people/pritam-kadasi/"
+
+- name: DBLP
+  icon: dblp
+  placement: about
+  url: "https://dblp.org/pid/266/8282"
+
+- name: ResearchGate
+  icon: researchgate
+  placement: about
+  url: "https://www.researchgate.net/profile/Pritam-Kadasi"
+
+- name: Hugging Face
+  icon: hugging-face
+  placement: about
+  url: "https://huggingface.co/prit-sk"
+
+- name: LinkedIn
+  icon: linkedin
+  placement: about
+  url: "https://in.linkedin.com/in/pritam-kadasi-9ba3573bb"
+
+- name: X
+  icon: x
+  placement: about
+  url: "https://x.com/Prit_SK"

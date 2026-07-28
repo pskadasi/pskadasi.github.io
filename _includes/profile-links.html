@@ -1,0 +1,58 @@
+{% assign placement = include.placement | default: "about" %}
+
+{% if placement == "about" %}
+  <div class="profile-menu" data-profile-menu>
+    <button
+      class="profile-menu-trigger"
+      type="button"
+      aria-expanded="false"
+      aria-controls="profile-links-menu"
+      data-profile-menu-trigger
+    >
+      {% include profile-icon.html icon="profiles" %}
+      <span>Profiles</span>
+    </button>
+
+    <nav
+      id="profile-links-menu"
+      class="profile-links"
+      aria-label="Profile and contact links"
+      data-profile-menu-panel
+      hidden
+    >
+      {% for profile in site.data.profile_links %}
+        {% if profile.placement == placement %}
+          {% assign profile_url = profile.url | default: "" %}
+          {% if profile.profile_key %}
+            {% assign profile_url = site.data.profile[profile.profile_key] | default: "" %}
+          {% endif %}
+
+          {% if profile.kind == "email" %}
+            <a
+              class="profile-icon-link"
+              data-email-link
+              href="#"
+              aria-label="Email {{ site.data.profile.name }}"
+              data-tooltip="Email"
+            >
+              {% include profile-icon.html icon=profile.icon %}
+              <span class="visually-hidden">Email</span>
+            </a>
+          {% elsif profile_url != "" %}
+            <a
+              class="profile-icon-link"
+              href="{{ profile_url | escape }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="{{ profile.name }} profile"
+              data-tooltip="{{ profile.name | escape }}"
+            >
+              {% include profile-icon.html icon=profile.icon %}
+              <span class="visually-hidden">{{ profile.name }}</span>
+            </a>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </nav>
+  </div>
+{% endif %}
