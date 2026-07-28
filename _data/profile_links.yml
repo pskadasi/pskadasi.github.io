@@ -39,6 +39,11 @@
   placement: about
   url: "https://huggingface.co/prit-sk"
 
+- name: GitHub
+  icon: github
+  placement: about
+  url: "https://github.com/pskadasi"
+
 - name: LinkedIn
   icon: linkedin
   placement: about
