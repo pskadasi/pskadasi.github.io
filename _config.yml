@@ -3,7 +3,7 @@ description: Personal website of Pritam Kadasi, AI Research Engineer
 url: "https://pskadasi.github.io"
 baseurl: ""
 google_analytics_id: "G-VWQ415V82M"
-font_stack: "Helvetica, 'Helvetica Neue', Arial, sans-serif"
+font_stack: "Optima, 'Avenir Next', Avenir, 'Segoe UI', Calibri, Arial, sans-serif"
 
 # Remove a section ID from this list to show it again.
 hidden_sections:
