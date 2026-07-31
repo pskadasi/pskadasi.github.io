@@ -17,6 +17,8 @@ permalink: /blog/:title.html
 collections:
   sections:
     output: false
+  updates:
+    output: false
 
 defaults:
   - scope:

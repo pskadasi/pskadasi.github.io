@@ -10,6 +10,7 @@
   const validModes = new Set([
     "about",
     "current-work",
+    "updates",
     "research",
     "phd-work",
     "publications",

@@ -4,6 +4,9 @@
 - label: Current work
   id: current-work
 
+- label: Updates
+  id: updates
+
 - label: Research
   children:
     - label: Research Interests

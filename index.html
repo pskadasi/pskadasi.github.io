@@ -18,6 +18,46 @@ layout: default
         {{ section.content }}
 
         {% case section.section_id %}
+          {% when "updates" %}
+            {% assign now_update = site.updates | where: "kind", "now" | first %}
+            {% if now_update %}
+              <article class="updates-now">
+                <header class="updates-heading">
+                  <h2>{{ now_update.title | default: "Now" }}</h2>
+                  {% if now_update.updated %}
+                    <time
+                      class="update-date"
+                      datetime="{{ now_update.updated | date: '%Y-%m-%d' }}"
+                    >
+                      Updated {{ now_update.updated | date: "%B %-d, %Y" }}
+                    </time>
+                  {% endif %}
+                </header>
+                <div class="update-copy">{{ now_update.content }}</div>
+              </article>
+            {% endif %}
+
+            {% assign update_notes = site.updates | where: "kind", "note" | sort: "date" | reverse %}
+            <section class="updates-list" aria-labelledby="recent-updates-heading">
+              <h2 id="recent-updates-heading">Recent notes</h2>
+              {% for update in update_notes %}
+                <article class="update-entry">
+                  <time
+                    class="update-date"
+                    datetime="{{ update.date | date: '%Y-%m-%d' }}"
+                  >
+                    {{ update.date | date: "%B %-d, %Y" }}
+                  </time>
+                  <div>
+                    <h3>{{ update.title }}</h3>
+                    <div class="update-copy">{{ update.content }}</div>
+                  </div>
+                </article>
+              {% else %}
+                <p>No updates yet.</p>
+              {% endfor %}
+            </section>
+
           {% when "publications" %}
             <ol class="publication-list">
               {% for publication in site.data.publications %}
