@@ -165,17 +165,50 @@ a:visited {
 }
 
 .menu-button {
+  position: relative;
   display: none;
   align-content: center;
   padding: 9px;
 }
 
 .menu-button span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   width: 23px;
   height: 1px;
   display: block;
-  margin: 3px auto;
+  margin: 0;
   background: currentColor;
+  transform-origin: center;
+  transform: translate(-50%, -50%);
+  transition:
+    top 240ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 160ms ease,
+    transform 240ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.menu-button span:first-child {
+  top: calc(50% - 7px);
+}
+
+.menu-button span:last-child {
+  top: calc(50% + 7px);
+}
+
+.menu-button[aria-expanded="true"] span:first-child {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.menu-button[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+  transform: translate(-50%, -50%) scaleX(0.3);
+}
+
+.menu-button[aria-expanded="true"] span:last-child {
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
 }
 
 .site-nav {
@@ -746,20 +779,38 @@ footer {
 
   .site-nav {
     position: absolute;
-    inset: 100% 18px auto;
+    top: 82px;
+    right: 18px;
+    left: auto;
     z-index: 30;
+    width: min(224px, calc(100% - 36px));
     height: auto;
-    max-height: calc(100dvh - 126px - var(--footer-height));
-    display: none;
+    max-height: calc(100dvh - 92px - var(--footer-height));
+    display: grid;
     align-items: stretch;
     gap: 0;
     overflow-y: auto;
+    overscroll-behavior: contain;
     border: 1px solid var(--line);
     background: var(--background);
+    box-shadow: 0 12px 28px rgb(0 0 0 / 14%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px) scale(0.98);
+    transform-origin: top right;
+    transition:
+      opacity 140ms ease,
+      transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 180ms;
   }
 
   .site-nav.open {
-    display: grid;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0) scale(1);
+    transition-delay: 0s;
   }
 
   .site-nav button,
@@ -877,6 +928,11 @@ footer {
   }
 
   .profile-menu-trigger .profile-icon {
+    transition: none;
+  }
+
+  .menu-button span,
+  .site-nav {
     transition: none;
   }
 

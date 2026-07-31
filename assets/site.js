@@ -79,6 +79,7 @@
   const closeMobileMenu = () => {
     navigation?.classList.remove("open");
     menuButton?.setAttribute("aria-expanded", "false");
+    menuButton?.setAttribute("aria-label", "Open navigation");
   };
 
   const closeResearchMenu = () => {
@@ -136,6 +137,10 @@
   menuButton?.addEventListener("click", () => {
     const open = navigation.classList.toggle("open");
     menuButton.setAttribute("aria-expanded", String(open));
+    menuButton.setAttribute(
+      "aria-label",
+      open ? "Close navigation" : "Open navigation",
+    );
   });
 
   navigation?.querySelectorAll("a").forEach((link) => {
@@ -163,6 +168,13 @@
   });
 
   document.addEventListener("mousedown", (event) => {
+    if (
+      navigation?.classList.contains("open") &&
+      !navigation.contains(event.target) &&
+      !menuButton?.contains(event.target)
+    ) {
+      closeMobileMenu();
+    }
     if (researchGroup && !researchGroup.contains(event.target)) {
       closeResearchMenu();
     }
@@ -172,6 +184,13 @@
   });
 
   document.addEventListener("focusin", (event) => {
+    if (
+      navigation?.classList.contains("open") &&
+      !navigation.contains(event.target) &&
+      !menuButton?.contains(event.target)
+    ) {
+      closeMobileMenu();
+    }
     if (
       profileMenuOpen &&
       profileMenu &&
