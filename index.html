@@ -19,18 +19,60 @@ layout: default
 
         {% case section.section_id %}
           {% when "updates" %}
-            {% assign now_update = site.updates | where: "kind", "now" | first %}
+            {% assign now_snapshots = site.updates | where: "kind", "now" | sort: "updated" | reverse %}
+            {% assign now_update = now_snapshots | first %}
+            {% assign previous_now_count = now_snapshots.size | minus: 1 %}
             {% if now_update %}
               <article class="updates-now">
                 <header class="updates-heading">
-                  <h2>{{ now_update.title | default: "Now" }}</h2>
-                  {% if now_update.updated %}
-                    <time
-                      class="update-date"
-                      datetime="{{ now_update.updated | date: '%Y-%m-%d' }}"
-                    >
-                      Updated {{ now_update.updated | date: "%B %-d, %Y" }}
-                    </time>
+                  <div>
+                    <h2>{{ now_update.title | default: "Now" }}</h2>
+                    {% if now_update.updated %}
+                      <time
+                        class="update-date"
+                        datetime="{{ now_update.updated | date: '%Y-%m-%d' }}"
+                      >
+                        Updated {{ now_update.updated | date: "%B %-d, %Y" }}
+                      </time>
+                    {% endif %}
+                  </div>
+                  {% if previous_now_count > 0 %}
+                    <div class="now-history-control" data-now-history>
+                      <button
+                        class="now-history-trigger"
+                        type="button"
+                        aria-expanded="false"
+                        aria-controls="now-history-panel"
+                        data-now-history-trigger
+                      >
+                        History
+                      </button>
+                      <div
+                        id="now-history-panel"
+                        class="now-history-panel"
+                        role="dialog"
+                        aria-labelledby="now-history-title"
+                        data-now-history-panel
+                        hidden
+                      >
+                        <header class="now-history-panel-heading">
+                          <h3 id="now-history-title">Previous Nows</h3>
+                        </header>
+                        <div class="now-history-list">
+                          {% for snapshot in now_snapshots offset: 1 %}
+                            <article class="now-history-entry">
+                              <time
+                                class="update-date"
+                                datetime="{{ snapshot.updated | date: '%Y-%m-%d' }}"
+                              >
+                                {{ snapshot.updated | date: "%B %-d, %Y" }}
+                              </time>
+                              <div class="update-copy">{{ snapshot.content }}</div>
+                            </article>
+                          {% endfor %}
+                        </div>
+                      </div>
+                    </div>
                   {% endif %}
                 </header>
                 <div class="update-copy">{{ now_update.content }}</div>

@@ -70,11 +70,18 @@
     "[data-profile-menu-trigger]",
   );
   const profileMenuPanel = document.querySelector("[data-profile-menu-panel]");
+  const nowHistory = document.querySelector("[data-now-history]");
+  const nowHistoryTrigger = document.querySelector(
+    "[data-now-history-trigger]",
+  );
+  const nowHistoryPanel = document.querySelector("[data-now-history-panel]");
   const profileMotionQuery = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   );
   let profileMenuOpen = false;
   let profileMenuHideTimer;
+  let nowHistoryOpen = false;
+  let nowHistoryHideTimer;
 
   const closeMobileMenu = () => {
     navigation?.classList.remove("open");
@@ -134,6 +141,95 @@
     }
   });
 
+  const positionNowHistoryPanel = () => {
+    if (!nowHistoryPanel || !nowHistoryTrigger || nowHistoryPanel.hidden) return;
+
+    const triggerRect = nowHistoryTrigger.getBoundingClientRect();
+    const footerTop =
+      document.querySelector("footer")?.getBoundingClientRect().top ||
+      window.innerHeight;
+    const margin = 18;
+    const gap = 8;
+    const panelWidth = nowHistoryPanel.offsetWidth;
+    const panelHeight = nowHistoryPanel.offsetHeight;
+    const maximumLeft = window.innerWidth - margin - panelWidth;
+    const rightSpace = window.innerWidth - margin - triggerRect.right;
+    const placeBeside = rightSpace >= panelWidth + gap;
+    let left;
+    let top;
+
+    if (placeBeside) {
+      left = triggerRect.right + gap;
+      top = Math.max(
+        margin,
+        Math.min(triggerRect.top, footerTop - margin - panelHeight),
+      );
+    } else {
+      left = Math.max(
+        margin,
+        Math.min(triggerRect.right - panelWidth, maximumLeft),
+      );
+      const belowTop = triggerRect.bottom + gap;
+      const belowSpace = footerTop - margin - belowTop;
+      const aboveSpace = triggerRect.top - margin - gap;
+      top =
+        panelHeight > belowSpace && aboveSpace > belowSpace
+          ? Math.max(margin, triggerRect.top - gap - panelHeight)
+          : belowTop;
+    }
+
+    nowHistoryPanel.style.left = `${Math.round(left)}px`;
+    nowHistoryPanel.style.top = `${Math.round(top)}px`;
+  };
+
+  const finishNowHistoryClose = () => {
+    if (!nowHistoryPanel || nowHistoryOpen) return;
+    window.clearTimeout(nowHistoryHideTimer);
+    nowHistoryPanel.hidden = true;
+    nowHistoryPanel.classList.remove("is-closing");
+  };
+
+  const openNowHistory = () => {
+    if (!nowHistoryPanel || nowHistoryOpen) return;
+    nowHistoryOpen = true;
+    window.clearTimeout(nowHistoryHideTimer);
+    nowHistoryPanel.hidden = false;
+    nowHistoryPanel.classList.remove("is-closing");
+    nowHistoryTrigger?.setAttribute("aria-expanded", "true");
+    positionNowHistoryPanel();
+
+    if (profileMotionQuery.matches) return;
+    nowHistoryPanel.classList.remove("is-opening");
+    void nowHistoryPanel.offsetWidth;
+    nowHistoryPanel.classList.add("is-opening");
+  };
+
+  const closeNowHistory = () => {
+    if (!nowHistoryPanel || !nowHistoryOpen) return;
+    nowHistoryOpen = false;
+    nowHistoryTrigger?.setAttribute("aria-expanded", "false");
+    nowHistoryPanel.classList.remove("is-opening");
+
+    if (profileMotionQuery.matches) {
+      finishNowHistoryClose();
+      return;
+    }
+
+    void nowHistoryPanel.offsetWidth;
+    nowHistoryPanel.classList.add("is-closing");
+    window.clearTimeout(nowHistoryHideTimer);
+    nowHistoryHideTimer = window.setTimeout(finishNowHistoryClose, 180);
+  };
+
+  nowHistoryPanel?.addEventListener("animationend", (event) => {
+    if (event.target !== nowHistoryPanel) return;
+    if (nowHistoryPanel.classList.contains("is-closing")) {
+      finishNowHistoryClose();
+    } else {
+      nowHistoryPanel.classList.remove("is-opening");
+    }
+  });
+
   menuButton?.addEventListener("click", () => {
     const open = navigation.classList.toggle("open");
     menuButton.setAttribute("aria-expanded", String(open));
@@ -163,6 +259,11 @@
     else openProfileMenu();
   });
 
+  nowHistoryTrigger?.addEventListener("click", () => {
+    if (nowHistoryOpen) closeNowHistory();
+    else openNowHistory();
+  });
+
   profileMenuPanel?.querySelectorAll("a").forEach((link) => {
     link.addEventListener("click", closeProfileMenu);
   });
@@ -181,6 +282,9 @@
     if (profileMenu && !profileMenu.contains(event.target)) {
       closeProfileMenu();
     }
+    if (nowHistory && !nowHistory.contains(event.target)) {
+      closeNowHistory();
+    }
   });
 
   document.addEventListener("focusin", (event) => {
@@ -198,17 +302,27 @@
     ) {
       closeProfileMenu();
     }
+    if (
+      nowHistoryOpen &&
+      nowHistory &&
+      !nowHistory.contains(event.target)
+    ) {
+      closeNowHistory();
+    }
   });
 
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
       const profileWasOpen = profileMenuOpen;
+      const nowHistoryWasOpen = nowHistoryOpen;
       const researchWasOpen = researchSubmenu?.classList.contains("open");
       const mobileWasOpen = navigation?.classList.contains("open");
       closeProfileMenu();
+      closeNowHistory();
       closeResearchMenu();
       closeMobileMenu();
       if (profileWasOpen) profileMenuTrigger?.focus();
+      else if (nowHistoryWasOpen) nowHistoryTrigger?.focus();
       else if (researchWasOpen) researchTrigger?.focus();
       else if (mobileWasOpen) menuButton?.focus();
     }
@@ -240,6 +354,7 @@
 
     document.querySelector(`[data-panel="${tab}"]`)?.scrollTo({ top: 0 });
     closeProfileMenu();
+    closeNowHistory();
     closeResearchMenu();
     closeMobileMenu();
 
@@ -263,6 +378,24 @@
     window.addEventListener("hashchange", syncTabFromHash);
     syncTabFromHash();
   }
+
+  window.addEventListener("resize", () => {
+    if (nowHistoryOpen) positionNowHistoryPanel();
+  });
+
+  document.addEventListener(
+    "scroll",
+    (event) => {
+      if (
+        nowHistoryOpen &&
+        nowHistoryPanel &&
+        !nowHistoryPanel.contains(event.target)
+      ) {
+        closeNowHistory();
+      }
+    },
+    true,
+  );
 
   const gallery = document.querySelector("#memory-gallery");
   if (gallery) {

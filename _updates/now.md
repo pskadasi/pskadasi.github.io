@@ -1,8 +1,0 @@
----
-kind: now
-title: Now
-updated: 2026-07-31
----
-
-- exploring LLMs for recommendation systems, heavily reading netflix blogs.
-- my curiosity for alignment research is increasing day by day, planning a paper for iclr, hopefully, i will release the paper on arXiv soon.
