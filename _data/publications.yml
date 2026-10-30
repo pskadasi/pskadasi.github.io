@@ -1,30 +1,199 @@
-- title: "Evaluating Prompt Variants for Polarization Detection"
-  authors: "Pritam Kadasi, Anuj Tiwari, Mayank Singh."
-  venue: SemEval
-  year: 2026
-  url: "https://aclanthology.org/2026.semeval-1.376/"
-
 - title: "Task-Specificity Score: Measuring How Much Instructions Really Matter for Supervision"
-  authors: "Pritam Kadasi, Abhishek Upperwal, Mayank Singh."
-  venue: Preprint
+  type: Conference
   year: 2026
-  url: "https://arxiv.org/abs/2602.03103"
+  authors:
+    - name: Pritam Kadasi
+      self: true
+    - name: Abhishek Upperwal
+    - name: Mayank Singh
+  venue:
+    short: EMNLP 2026
+    full: Proceedings of the 2026 Conference on Empirical Methods in Natural Language Processing
+  ranking:
+    label: CORE A*
+    edition: ICORE 2026
+    url: "https://portal.core.edu.au/conf-ranks/448/"
+  pages: "44255–44267"
+  url: "https://aclanthology.org/2026.emnlp-main.1945/"
+  artifacts:
+    - label: Paper
+      kind: document
+      url: "https://aclanthology.org/2026.emnlp-main.1945/"
+      preview_url: "https://aclanthology.org/2026.emnlp-main.1945.pdf"
+      download_url: "https://aclanthology.org/2026.emnlp-main.1945.pdf"
+    - label: Poster
+      kind: document
+      url: "https://drive.google.com/file/d/1h2bL3BkDyoTcJx4ZkHIoSWgohCXVrawH/view?usp=sharing"
+      preview_url: "https://drive.google.com/file/d/1h2bL3BkDyoTcJx4ZkHIoSWgohCXVrawH/preview"
+      download_url: "https://drive.google.com/uc?export=download&id=1h2bL3BkDyoTcJx4ZkHIoSWgohCXVrawH"
+    - label: Video
+      kind: video
+      url: "https://drive.google.com/file/d/1Bg3vAHPxuzSadmLMavXMd8G-5V9LXzXi/view?usp=sharing"
+      preview_url: "https://drive.google.com/file/d/1Bg3vAHPxuzSadmLMavXMd8G-5V9LXzXi/preview"
+      download_url: "https://drive.google.com/uc?export=download&id=1Bg3vAHPxuzSadmLMavXMd8G-5V9LXzXi"
+    - label: BibTeX
+      url: "https://aclanthology.org/2026.emnlp-main.1945.bib"
+
+- title: "LingoResearchGroup at SemEval-2026 Task 9: Evaluating Prompt Variants for Polarization Detection"
+  type: Workshop
+  year: 2026
+  authors:
+    - name: Pritam Kadasi
+      self: true
+    - name: Anuj Tiwari
+    - name: Mayank Singh
+  venue:
+    short: SemEval 2026
+    full: Proceedings of the 20th International Workshop on Semantic Evaluation
+  pages: "2991–3001"
+  doi: "10.18653/v1/2026.semeval-1.376"
+  url: "https://aclanthology.org/2026.semeval-1.376/"
+  artifacts:
+    - label: Paper
+      kind: document
+      url: "https://aclanthology.org/2026.semeval-1.376/"
+      preview_url: "https://aclanthology.org/2026.semeval-1.376.pdf"
+      download_url: "https://aclanthology.org/2026.semeval-1.376.pdf"
+    - label: BibTeX
+      url: "https://aclanthology.org/2026.semeval-1.376.bib"
+
+- title: "When LLMs Stop Following Steps: A Diagnostic Study of Procedural Execution in Language Models"
+  type: Preprint
+  year: 2026
+  authors:
+    - name: Sailesh Panda
+    - name: Pritam Kadasi
+      self: true
+    - name: Abhishek Upperwal
+    - name: Mayank Singh
+  venue:
+    short: arXiv
+    full: arXiv preprint arXiv:2605.00817
+  doi: "10.48550/arXiv.2605.00817"
+  url: "https://arxiv.org/abs/2605.00817"
+  artifacts:
+    - label: Preprint
+      kind: document
+      url: "https://arxiv.org/abs/2605.00817"
+      preview_url: "https://arxiv.org/pdf/2605.00817"
+      download_url: "https://arxiv.org/pdf/2605.00817"
+    - label: BibTeX
+      url: "https://dblp.org/rec/journals/corr/abs-2605-00817.bib"
 
 - title: "ADAPT: Learning Task Mixtures for Budget-Constrained Instruction Tuning"
-  authors: "Pritam Kadasi, Abhishek Upperwal, Mayank Singh."
-  venue: Preprint
+  type: Preprint
   year: 2025
+  authors:
+    - name: Pritam Kadasi
+      self: true
+    - name: Abhishek Upperwal
+    - name: Mayank Singh
+  venue:
+    short: arXiv
+    full: arXiv preprint arXiv:2512.04555
+  doi: "10.48550/arXiv.2512.04555"
   url: "https://arxiv.org/abs/2512.04555"
+  artifacts:
+    - label: Preprint
+      kind: document
+      url: "https://arxiv.org/abs/2512.04555"
+      preview_url: "https://arxiv.org/pdf/2512.04555"
+      download_url: "https://arxiv.org/pdf/2512.04555"
+    - label: Code
+      url: "https://github.com/pskadasi/ADAPT/"
+    - label: BibTeX
+      url: "https://dblp.org/rec/journals/corr/abs-2512-04555.bib"
 
 - title: "Model Hubs and Beyond: Analyzing Model Popularity, Performance, and Documentation"
-  authors: "Pritam Kadasi, Sriman Reddy Kondam, Srivathsa V. Chaturvedula, et al."
-  venue: ICWSM
+  type: Conference
   year: 2025
+  authors:
+    - name: Pritam Kadasi
+      self: true
+    - name: Sriman Reddy Kondam
+    - name: Srivathsa Vamsi Chaturvedula
+    - name: Rudranshu Sen
+    - name: Agnish Saha
+    - name: Soumavo Sikdar
+    - name: Sayani Sarkar
+    - name: Suhani Mittal
+    - name: Rohit Jindal
+    - name: Mayank Singh
+  venue:
+    short: ICWSM 2025
+    full: Proceedings of the Nineteenth International AAAI Conference on Web and Social Media
+  ranking:
+    label: CORE A
+    edition: ICORE 2026
+    url: "https://portal.core.edu.au/conf-ranks/2169/"
+  pages: "965–993"
+  doi: "10.1609/icwsm.v19i1.35855"
   url: "https://ojs.aaai.org/index.php/ICWSM/article/view/35855"
+  artifacts:
+    - label: Paper
+      kind: document
+      url: "https://ojs.aaai.org/index.php/ICWSM/article/view/35855"
+      preview_url: "https://arxiv.org/pdf/2503.15222"
+      download_url: "https://ojs.aaai.org/index.php/ICWSM/article/download/35855/38009"
+    - label: BibTeX
+      url: "https://dblp.org/rec/conf/icwsm/KadasiKCSSSSMJS25.bib"
 
-- title: "Unveiling the Multi-Annotation Process: Examining Annotation Quantity and Instance Difficulty"
-  authors: "Pritam Kadasi, Mayank Singh."
-  venue: EMNLP
+- title: "Unveiling the Multi-Annotation Process: Examining the Influence of Annotation Quantity and Instance Difficulty on Model Performance"
+  type: Conference
   year: 2023
+  authors:
+    - name: Pritam Kadasi
+      self: true
+    - name: Mayank Singh
+  venue:
+    short: Findings of EMNLP 2023
+    full: "Findings of the Association for Computational Linguistics: EMNLP 2023"
+  ranking:
+    label: CORE A*
+    edition: ICORE 2026
+    url: "https://portal.core.edu.au/conf-ranks/448/"
+  pages: "1371–1388"
+  doi: "10.18653/v1/2023.findings-emnlp.96"
   url: "https://aclanthology.org/2023.findings-emnlp.96/"
+  artifacts:
+    - label: Paper
+      kind: document
+      url: "https://aclanthology.org/2023.findings-emnlp.96/"
+      preview_url: "https://aclanthology.org/2023.findings-emnlp.96.pdf"
+      download_url: "https://aclanthology.org/2023.findings-emnlp.96.pdf"
+    - label: BibTeX
+      url: "https://aclanthology.org/2023.findings-emnlp.96.bib"
 
+- title: "Gandhipedia: A One-stop AI-enabled Portal for Browsing Gandhian Literature, Life-events and His Social Network"
+  type: Conference Demo
+  year: 2020
+  authors:
+    - name: Sayantan Adak
+    - name: Atharva Vyas
+    - name: Animesh Mukherjee
+    - name: Heer Ambavi
+    - name: Pritam Kadasi
+      self: true
+    - name: Mayank Singh
+    - name: Shivam Patel
+  venue:
+    short: JCDL 2020
+    full: Proceedings of the ACM/IEEE Joint Conference on Digital Libraries in 2020
+  ranking:
+    label: CORE A*
+    display: CORE A* · 2018
+    edition: CORE 2018
+    url: "https://portal.core.edu.au/conf-ranks/2085/"
+  pages: "539–540"
+  doi: "10.1145/3383583.3398631"
+  url: "https://doi.org/10.1145/3383583.3398631"
+  artifacts:
+    - label: Paper
+      kind: document
+      url: "https://doi.org/10.1145/3383583.3398631"
+      preview_url: "https://arxiv.org/pdf/2006.03316"
+      download_url: "https://arxiv.org/pdf/2006.03316"
+    - label: Demo
+      url: "https://www.freedomopedia.in/en/gandhipedia_home"
+    - label: BibTeX
+      url: "https://dblp.org/rec/conf/jcdl/AdakV0AK0P20.bib"

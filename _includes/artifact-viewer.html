@@ -1,0 +1,52 @@
+<dialog
+  class="artifact-viewer-dialog"
+  aria-labelledby="artifact-viewer-title"
+  data-artifact-dialog
+>
+  <div class="artifact-viewer-shell">
+    <header class="artifact-viewer-heading">
+      <div>
+        <p data-artifact-dialog-label>Artifact</p>
+        <h2 id="artifact-viewer-title" data-artifact-dialog-title></h2>
+      </div>
+      <button
+        class="artifact-viewer-close"
+        type="button"
+        aria-label="Close viewer"
+        title="Close viewer"
+        data-artifact-close
+      >
+        <span aria-hidden="true"></span>
+      </button>
+    </header>
+    <div class="artifact-viewer-frame">
+      <iframe
+        title="Publication artifact"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+        data-artifact-frame
+      ></iframe>
+    </div>
+    <div class="artifact-viewer-actions">
+      <a
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-artifact-bypass
+        data-artifact-original-link
+      >
+        Open original <span aria-hidden="true">↗</span>
+      </a>
+      <a
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+        download
+        data-artifact-bypass
+        data-artifact-download-link
+      >
+        Download <span aria-hidden="true">↓</span>
+      </a>
+    </div>
+  </div>
+</dialog>

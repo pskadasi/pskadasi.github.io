@@ -1,0 +1,48 @@
+{% assign work = site.data.current_work %}
+<div class="current-work-content">
+  <h1>{{ work.heading | escape }}</h1>
+
+  <header class="current-work-hero">
+    <p>{{ work.role | escape }}{% if work.focus %} · {{ work.focus | escape }}{% endif %}</p>
+    <h2>{{ work.summary | escape }}</h2>
+  </header>
+
+  {% if work.metrics and work.metrics.size > 0 %}
+  <ul class="current-work-metrics" aria-label="{{ work.metrics_label | default: 'Key metrics' | escape }}">
+    {% for metric in work.metrics %}
+    <li>{{ metric | escape }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if work.projects and work.projects.size > 0 %}
+  <section class="current-work-timeline" aria-label="{{ work.projects_label | default: 'Projects' | escape }}">
+    {% for project in work.projects %}
+    <article class="current-work-card">
+      <header>
+        <h2>{{ project.title | escape }}</h2>
+        {% if project.badge %}<strong class="current-work-badge">{{ project.badge | escape }}</strong>{% endif %}
+      </header>
+      {% if project.bullets and project.bullets.size > 0 %}
+      <ul>
+        {% for bullet in project.bullets %}
+        <li>{{ bullet | escape }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if work.stack and work.stack.size > 0 %}
+  <section class="current-work-stack" aria-labelledby="current-work-stack-title">
+    <h2 id="current-work-stack-title">{{ work.stack_heading | default: 'Technical stack' | escape }}</h2>
+    <ul>
+      {% for item in work.stack %}
+      <li>{{ item | escape }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</div>

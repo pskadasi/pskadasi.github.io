@@ -75,6 +75,21 @@
     "[data-now-history-trigger]",
   );
   const nowHistoryPanel = document.querySelector("[data-now-history-panel]");
+  const artifactDialog = document.querySelector("[data-artifact-dialog]");
+  const artifactDialogLabel = document.querySelector(
+    "[data-artifact-dialog-label]",
+  );
+  const artifactDialogTitle = document.querySelector(
+    "[data-artifact-dialog-title]",
+  );
+  let artifactFrame = document.querySelector("[data-artifact-frame]");
+  const artifactOriginalLink = document.querySelector(
+    "[data-artifact-original-link]",
+  );
+  const artifactDownloadLink = document.querySelector(
+    "[data-artifact-download-link]",
+  );
+  const artifactCloseButton = document.querySelector("[data-artifact-close]");
   const profileMotionQuery = window.matchMedia(
     "(prefers-reduced-motion: reduce)",
   );
@@ -82,6 +97,176 @@
   let profileMenuHideTimer;
   let nowHistoryOpen = false;
   let nowHistoryHideTimer;
+  let artifactTrigger;
+
+  const configureArtifactTrigger = (trigger, artifact) => {
+    if (!trigger || !artifact?.preview) return false;
+    trigger.classList.add("artifact-viewer-trigger");
+    trigger.setAttribute("aria-haspopup", "dialog");
+    trigger.dataset.artifactKind = artifact.kind || "document";
+    trigger.dataset.artifactLabel = artifact.label || "Document";
+    trigger.dataset.artifactPreview = artifact.preview;
+    trigger.dataset.artifactOriginal = artifact.original || artifact.preview;
+    trigger.dataset.artifactDownload = artifact.download || artifact.preview;
+    trigger.dataset.artifactTitle =
+      artifact.title || trigger.textContent.trim() || artifact.label;
+    return true;
+  };
+
+  const inferArtifactFromLink = (link) => {
+    if (!(link instanceof HTMLAnchorElement)) return null;
+    if (link.hasAttribute("data-artifact-bypass")) return null;
+    if (link.dataset.artifactPreview) return null;
+
+    let url;
+    try {
+      url = new URL(link.href, window.location.href);
+    } catch {
+      return null;
+    }
+
+    const normalizedPath = url.pathname.replace(/\/$/, "");
+    const normalizedUrl = `${url.origin}${normalizedPath}`;
+    const title = link.textContent.trim();
+
+    if (
+      normalizedUrl ===
+      "https://ojs.aaai.org/index.php/ICWSM/article/view/35855"
+    ) {
+      return {
+        kind: "document",
+        label: "Paper",
+        title,
+        original: url.href,
+        preview: "https://arxiv.org/pdf/2503.15222",
+        download:
+          "https://ojs.aaai.org/index.php/ICWSM/article/download/35855/38009",
+      };
+    }
+
+    if (url.hostname === "arxiv.org") {
+      const match = normalizedPath.match(/^\/(?:abs|pdf)\/([^/]+?)(?:\.pdf)?$/);
+      if (match) {
+        const identifier = match[1];
+        return {
+          kind: "document",
+          label: "Preprint",
+          title,
+          original: `https://arxiv.org/abs/${identifier}`,
+          preview: `https://arxiv.org/pdf/${identifier}`,
+          download: `https://arxiv.org/pdf/${identifier}`,
+        };
+      }
+    }
+
+    if (url.hostname === "aclanthology.org") {
+      const identifier = normalizedPath.match(/^\/(\d{4}\.[^/]+?)(?:\.pdf)?$/)?.[1];
+      if (identifier) {
+        return {
+          kind: "document",
+          label: "Paper",
+          title,
+          original: `https://aclanthology.org/${identifier}/`,
+          preview: `https://aclanthology.org/${identifier}.pdf`,
+          download: `https://aclanthology.org/${identifier}.pdf`,
+        };
+      }
+    }
+
+    if (url.hostname === "drive.google.com") {
+      const fileId = normalizedPath.match(/^\/file\/d\/([^/]+)/)?.[1];
+      if (fileId) {
+        return {
+          kind: "document",
+          label: /thesis/i.test(title) ? "Thesis" : "Document",
+          title,
+          original: url.href,
+          preview: `https://drive.google.com/file/d/${fileId}/preview`,
+          download: `https://drive.google.com/uc?export=download&id=${fileId}`,
+        };
+      }
+    }
+
+    return null;
+  };
+
+  document.querySelectorAll("a[href]").forEach((link) => {
+    const artifact = inferArtifactFromLink(link);
+    if (artifact) configureArtifactTrigger(link, artifact);
+  });
+
+  const closeArtifactViewer = () => {
+    if (artifactDialog?.open) artifactDialog.close();
+  };
+
+  const openArtifactViewer = (trigger) => {
+    const previewUrl = trigger.dataset.artifactPreview;
+    const originalUrl = trigger.dataset.artifactOriginal || previewUrl;
+    if (!previewUrl) return;
+
+    if (!artifactDialog?.showModal) {
+      window.open(originalUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    artifactTrigger = trigger;
+    const kind = trigger.dataset.artifactKind || "document";
+    const label = trigger.dataset.artifactLabel || "Document";
+    const title = trigger.dataset.artifactTitle || label;
+    artifactDialog.dataset.artifactKind = kind;
+    if (artifactDialogLabel) artifactDialogLabel.textContent = label;
+    if (artifactDialogTitle) artifactDialogTitle.textContent = title;
+    if (artifactFrame) {
+      const freshFrame = artifactFrame.cloneNode(false);
+      artifactFrame.replaceWith(freshFrame);
+      artifactFrame = freshFrame;
+      artifactFrame.src = previewUrl;
+      artifactFrame.title = `${label}: ${title}`;
+    }
+    if (artifactOriginalLink) artifactOriginalLink.href = originalUrl;
+    if (artifactDownloadLink) {
+      artifactDownloadLink.href =
+        trigger.dataset.artifactDownload || previewUrl;
+    }
+    artifactDialog.showModal();
+  };
+
+  document.addEventListener("click", (event) => {
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    ) {
+      return;
+    }
+
+    const target = event.target.closest("a, button");
+    if (!target) return;
+    if (!target.dataset.artifactPreview && target instanceof HTMLAnchorElement) {
+      const artifact = inferArtifactFromLink(target);
+      if (artifact) configureArtifactTrigger(target, artifact);
+    }
+    if (!target.classList.contains("artifact-viewer-trigger")) return;
+    event.preventDefault();
+    openArtifactViewer(target);
+  });
+
+  artifactCloseButton?.addEventListener("click", closeArtifactViewer);
+
+  artifactDialog?.addEventListener("click", (event) => {
+    if (event.target === artifactDialog) closeArtifactViewer();
+  });
+
+  artifactDialog?.addEventListener("close", () => {
+    if (artifactDialog.open) return;
+    if (artifactFrame) artifactFrame.removeAttribute("src");
+    delete artifactDialog.dataset.artifactKind;
+    artifactTrigger?.focus();
+    artifactTrigger = undefined;
+  });
 
   const closeMobileMenu = () => {
     navigation?.classList.remove("open");

@@ -1,0 +1,105 @@
+heading: "Current work"
+role: "AI Research Engineer"
+focus: "Recommendation Systems"
+summary: "Built a recommendation engine end to end for a large Indian OTT streaming platform with 10.65M users and 1.1B viewing events: data, GPU training, batch inference for every user, evaluation and production release."
+
+metrics_label: "Key metrics"
+metrics:
+  - "11.24M users with personalised carousels"
+  - "5 models trained on 8 months of data"
+  - "8-month retraining: crashing -> 6.2 h"
+  - "62% -> 9.5% generic-fallback items"
+  - "Continue Series hit rate 92.5%"
+  - "1.7M objects released to production"
+
+projects_label: "Recommendation systems projects"
+projects:
+  - title: "RAG and semantic search"
+    badge: "In progress"
+    bullets:
+      - "LLM with retrieval-augmented generation for natural-language content search and recommendation explanations."
+      - "Content metadata embedded with sentence transformers, indexed in Qdrant with hybrid search (dense + BM25) and re-ranking, served on an NVIDIA L40S GPU."
+
+  - title: "Vector search and real-time serving"
+    badge: "In progress"
+    bullets:
+      - "Chose self-hosted Qdrant (HNSW) for item-item, user-item and user-user retrieval and Valkey for the real-time cache, with FAISS kept for GPU batch scoring. Zero licence cost."
+      - "Deploying on Kubernetes (EKS) for 10M+ users, with session-aware recommendations that recompute the user vector from the last few watches."
+
+  - title: "Production release"
+    badge: "1.7M objects"
+    bullets:
+      - "Released the full-data carousels to production AWS S3: 1.7M objects moved onto the live serving path, with a verified rollback archive and a _SUCCESS signal telling the backend when data is ready."
+      - "Merged the code into the team GitHub repo."
+      - "Delivered the demo deck, requirements and sign-off tracker, weekly status reporting, and data requests for subscription, sign-up and search data."
+
+  - title: "Evaluation framework"
+    badge: "300K+ users"
+    bullets:
+      - "Time-split offline evaluation: Hit Rate@10, Recall@10 and NDCG@10 on 300K+ users."
+      - "Automated PDF reports for editorial review of power-user and cold-user cohorts, comparing before and after against real watch history."
+      - "Used the framework to decide which models and carousels ship, including flagging shows that lagged the older models."
+
+  - title: "Scenario routing"
+    badge: "92.5% hit rate"
+    bullets:
+      - "Routed each user to Continue Series, Welcome Back or Onboarding by lifecycle state; the 11.24M-user route index was cross-checked with 0 mismatches."
+      - "Held-out results: Continue Series 92.5% hit rate vs 71-77% for existing carousels; Welcome Back ~40% vs 16-18% (~2.3x)."
+      - "Dropped genre carousels after they lost to a plain popularity list and advised against routing the New User list (9% vs 25%)."
+      - "Built a FastAPI reference service with 11 carousels, 32 endpoints and a versioned data contract for the backend team."
+
+  - title: "Batch inference for every user"
+    badge: "more than 30x faster"
+    bullets:
+      - "Redesigned the pipeline with bigger batches, local data, parallel streams and model scoring only for active users: more than 30x faster."
+      - "Generated carousels for 11.24M users; generic fallback items fell from 62% to 9.5%, and serial hit rate rose from 69% to 82%."
+
+  - title: "Data-quality discovery"
+    badge: "36% -> 100%"
+    bullets:
+      - "Found that the content catalogue had silently stopped updating on 5 July, dropping 63% of July-August viewing from training."
+      - "Rebuilt the catalogue from raw CMS tables in Amazon Redshift, including a 15.4M-row EAV property table; events matched to a title went from 36% to 100%, and July-August training rows went from 23M to 76M."
+      - "Profiled 28.5M raw user IDs -> 10.65M real users; found that 60.6% of IDs are IP addresses, not accounts, profiled all 5 ID formats, and raised the account-ID logging gap."
+
+  - title: "GPU training at scale"
+    badge: "6.2 h"
+    bullets:
+      - "8-month training used to crash on memory; all 5 models now retrain in 6.2 h, 40-100x faster per training row."
+      - "1.1B events -> 371M training rows (7.8 GB) from one local extract; data loading went from hours to minutes."
+      - "Sparse GPU embedding updates 106 -> 3.3 ms per step (32x); vectorised data prep cut RAM from 54 to 22 GB; SASRec bf16 mixed precision 27 -> 13 ms per batch."
+      - "Trained on all rows instead of 1.5-17% samples: Recall@10 Two-Tower 0.70 -> 0.83 and Matrix Factorization 0.42 -> 0.57; against the older 60-day models, MF +51%, Two-Tower +30% and SASRec +10%."
+      - "31 automated tests confirmed the new loaders give the same results as the old ones."
+
+  - title: "End-to-end recommendation platform"
+    badge: "5 models"
+    bullets:
+      - "Five models: Matrix Factorization, Two-Tower, SASRec (transformer), content-based and collaborative."
+      - "11 carousels for every user: Trending, New Release, Popular in Your Region, Because You Watched, People Also Watched, Hidden Gems, plus 3 scenario carousels: Onboarding Picks, Welcome Back and Continue Series."
+      - "Language- and region-aware ranking blends model score, carousel signal, language affinity (70% long-term / 30% recent, 30-day half-life) and genre affinity."
+      - "The AI team owns the models, scenario rules and batch data contract; the backend team owns the serving API."
+
+stack_heading: "Technical stack"
+stack:
+  - "PyTorch"
+  - "CUDA"
+  - "bf16/AMP"
+  - "Two-Tower"
+  - "Matrix Factorization"
+  - "SASRec"
+  - "collaborative filtering"
+  - "content filtering"
+  - "cold start"
+  - "FAISS"
+  - "Qdrant"
+  - "Valkey"
+  - "RAG"
+  - "LLMs"
+  - "Spark"
+  - "DuckDB"
+  - "Redshift"
+  - "AWS S3"
+  - "Parquet"
+  - "FastAPI"
+  - "Kubernetes/EKS"
+  - "Git"
+  - "tmux"
