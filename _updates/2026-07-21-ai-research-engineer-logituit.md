@@ -1,6 +1,6 @@
 ---
 kind: note
-title: ai research enginner @ logituit
+title: AI Research Engineer @ Logituit
 date: 2026-07-21
 ---
 

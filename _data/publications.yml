@@ -1,3 +1,30 @@
+- title: "When LLMs Stop Following Steps: A Diagnostic Study of Procedural Execution in Language Models"
+  type: Conference
+  year: 2027
+  authors:
+    - name: Sailesh Panda
+    - name: Pritam Kadasi
+      self: true
+    - name: Abhishek Upperwal
+    - name: Mayank Singh
+  venue:
+    short: EACL 2027
+    full: Proceedings of the 20th Conference of the European Chapter of the Association for Computational Linguistics
+  ranking:
+    label: CORE A
+    edition: ICORE 2026
+    url: "https://portal.core.edu.au/conf-ranks/468/"
+  doi: "10.48550/arXiv.2605.00817"
+  url: "https://arxiv.org/abs/2605.00817"
+  artifacts:
+    - label: Preprint
+      kind: document
+      url: "https://arxiv.org/abs/2605.00817"
+      preview_url: "https://arxiv.org/pdf/2605.00817"
+      download_url: "https://arxiv.org/pdf/2605.00817"
+    - label: BibTeX
+      url: "https://dblp.org/rec/journals/corr/abs-2605-00817.bib"
+
 - title: "Task-Specificity Score: Measuring How Much Instructions Really Matter for Supervision"
   type: Conference
   year: 2026
@@ -56,29 +83,6 @@
       download_url: "https://aclanthology.org/2026.semeval-1.376.pdf"
     - label: BibTeX
       url: "https://aclanthology.org/2026.semeval-1.376.bib"
-
-- title: "When LLMs Stop Following Steps: A Diagnostic Study of Procedural Execution in Language Models"
-  type: Preprint
-  year: 2026
-  authors:
-    - name: Sailesh Panda
-    - name: Pritam Kadasi
-      self: true
-    - name: Abhishek Upperwal
-    - name: Mayank Singh
-  venue:
-    short: arXiv
-    full: arXiv preprint arXiv:2605.00817
-  doi: "10.48550/arXiv.2605.00817"
-  url: "https://arxiv.org/abs/2605.00817"
-  artifacts:
-    - label: Preprint
-      kind: document
-      url: "https://arxiv.org/abs/2605.00817"
-      preview_url: "https://arxiv.org/pdf/2605.00817"
-      download_url: "https://arxiv.org/pdf/2605.00817"
-    - label: BibTeX
-      url: "https://dblp.org/rec/journals/corr/abs-2605-00817.bib"
 
 - title: "ADAPT: Learning Task Mixtures for Budget-Constrained Instruction Tuning"
   type: Preprint
